@@ -1,0 +1,28 @@
+<div class="container mt-5">
+    <h1 class="text-center">Search Engine</h1>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for title, author or genre" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" />
+                <button class="btn btn-primary" (click)="onSearch()">Search</button>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-4" *ngIf="searchResults.length > 0">
+        <div class="col-md-8">
+            <h3>Results for "{{ searchQuery }}":</h3>
+            <ul class="list-group">
+                <li *ngFor="let result of searchResults" class="list-group-item">
+                    {{ result }}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-4" *ngIf="searchResults.length === 0 && searchQuery">
+        <div class="col-md-8">
+            <div class="alert alert-warning text-center">
+                No results found for "{{ searchQuery }}".
+            </div>
+        </div>
+    </div>
+</div>  
