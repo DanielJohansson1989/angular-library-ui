@@ -2,7 +2,10 @@
     <div *ngIf="apiResponse.isSuccess">
         <p *ngFor="let book of apiResponse.result">
             {{ book.title }} by {{ book.author }}
+            <span *ngIf="book.available" class="btn btn-success">Is available</span>
+            <span *ngIf="book.available === false" class="btn btn-danger">Is not available</span>
         </p>
+        
     </div>
     <div *ngIf="!apiResponse.isSuccess && apiResponse.errorList">
         <span>
