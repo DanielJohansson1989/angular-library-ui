@@ -15,6 +15,10 @@ export class APIResponseService{
     }
 
     getAllBooks(): Observable<APIResponse>{
-        return this.http.get<APIResponse>(this.baseURL + 'books'); //bör returnera en apirespons som string som innehåller böcker
+        return this.http.get<APIResponse>(this.baseURL + 'books');
+    }
+
+    searchForBooks(searchKeyword: string): Observable<APIResponse>{
+        return this.http.get<APIResponse>(this.baseURL + 'book/result?searchKeyword=' + searchKeyword)
     }
 }
