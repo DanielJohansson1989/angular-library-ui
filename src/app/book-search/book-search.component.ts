@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { APIResponse } from '../models/apiresponse';
+import { APIResponseService } from '../service/apiresponse.service';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-book-search',
@@ -10,20 +13,34 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './book-search.component.css'
 })
 export class BookSearchComponent {
-  searchQuery: string = '';
-  searchResults: string[] = [];
 
-  constructor() {}
+  searchQuery: string = '';
+  hasSearched: boolean = false;
+  isLoading: boolean = false;
+
+  apiResponse: APIResponse = {
+    isSuccess: false,
+    result: [],
+    httpStatusCode: HttpStatusCode.BadRequest,
+    errorList: [],
+  }
+
+  constructor(private apiResponseService: APIResponseService) {}
 
   onSearch(): void {
-    if (this.searchQuery) {
-      this.searchResults = [
-        `Result 1 for "${this.searchQuery}"`,
-        `Result 2 for "${this.searchQuery}"`,
-        `Result 3 for "${this.searchQuery}"`
-      ];
-    } else {
-      this.searchResults = [ ];
-    }
+    this.isLoading = true;
+    this.apiResponseService.searchForBooks(this.searchQuery).subscribe({
+      next: (response: APIResponse) => {
+        this.apiResponse = response;
+        console.log('API Response: ', this.apiResponse);
+        this.hasSearched = true;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error fetching data: ', error);
+        this.hasSearched = true;
+        this.isLoading = false;
+      }
+    })
   }
 }

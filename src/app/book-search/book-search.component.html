@@ -8,21 +8,32 @@
             </div>
         </div>
     </div>
-    <div class="row justify-content-center mt-4" *ngIf="searchResults.length > 0">
+    <div class="text-center" *ngIf="isLoading">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>  
+    <div class="row justify-content-center mt-4" *ngIf="apiResponse.isSuccess && apiResponse.result.length > 0">
         <div class="col-md-8">
             <h3>Results for "{{ searchQuery }}":</h3>
             <ul class="list-group">
-                <li *ngFor="let result of searchResults" class="list-group-item">
-                    {{ result }}
+                <li *ngFor="let book of apiResponse.result" class="list-group-item">
+                    <div>{{ book.title }}</div>
+                    <div>{{ book.author}}</div>
+                    <span *ngIf="book.available" class="btn btn-success">Is available</span>
+                    <span *ngIf="book.available === false" class="btn btn-danger">Is not available</span>
                 </li>
             </ul>
         </div>
     </div>
-    <div class="row justify-content-center mt-4" *ngIf="searchResults.length === 0 && searchQuery">
+    <div class="row justify-content-center mt-4" *ngIf="apiResponse.result.length === 0 && hasSearched">
         <div class="col-md-8">
             <div class="alert alert-warning text-center">
                 No results found for "{{ searchQuery }}".
             </div>
         </div>
+    </div>
+    <div class="row justify-content-center mt-4" *ngIf="!apiResponse.isSuccess && hasSearched">
+        <p class="text-danger">Could not access data. Error 400</p>
     </div>
 </div>  
