@@ -1,4 +1,12 @@
 <div class="container">
+    <div>
+        <label for="sortOptions">Sort by:</label>
+        <select id="sortOptions" (change)="onSortChange($event)">
+            <option value="title">Title</option>
+            <option value="available">Available</option>
+            <option value="author">Author</option>
+        </select>
+    </div>
     <div *ngIf="apiResponse.isSuccess">
         <p *ngFor="let book of apiResponse.result">
             {{ book.title }} by {{ book.author }}

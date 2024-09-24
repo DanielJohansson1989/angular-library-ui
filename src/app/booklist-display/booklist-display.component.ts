@@ -32,11 +32,53 @@ export class BooklistDisplayComponent {
     this.apiResponseService.getAllBooks().subscribe({
       next: (response: APIResponse) => {
         this.apiResponse = response;
+        this.sortByTitle();
         console.log('API Response: ', this.apiResponse);
       },
       error: (error) => {
         console.error('Error fetching data: ', error);
       }
+    });
+  }
+
+  onSortChange(event: any) {
+    const sortOption = event.target.value;
+    switch(sortOption) {
+      case 'title': {
+        this.sortByTitle();
+        break;
+      }
+      case 'available': {
+        this.sortByAvailable();
+        break;
+      }
+      case 'author': {
+        this.sortByAuthor();
+        break;
+      }
+      default: {
+        this.sortByTitle();
+        console.warn(`Unknown sorting option: ${sortOption}. Defaulting to sorting by title`);
+        break;
+      }
+    }
+  }
+
+  sortByTitle() {
+    this.apiResponse.result.sort((a, b) => { 
+      return a.title.localeCompare(b.title)
+    });
+  }
+
+  sortByAvailable() {
+    this.apiResponse.result.sort((a, b) => {
+      return (a.available === b.available) ? 0 : a.available ? -1 : 1;
+    });
+  }
+
+  sortByAuthor() {
+    this.apiResponse.result.sort((a, b) => {
+      return a.author.localeCompare(b.author);
     });
   }
 }
