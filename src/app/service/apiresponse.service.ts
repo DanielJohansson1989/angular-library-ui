@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { APIResponse } from "../models/apiresponse";
-import { createBook } from "../models/createBook";
+import { Book } from "../models/book";
 
 @Injectable({
     providedIn: 'root'
@@ -15,15 +15,15 @@ export class APIResponseService{
 
     }
 
-    getAllBooks(): Observable<APIResponse>{
-        return this.http.get<APIResponse>(this.baseURL + 'books');
+    getAllBooks(): Observable<APIResponse<Book[]>>{
+        return this.http.get<APIResponse<Book[]>>(this.baseURL + 'books');
     }
 
-    searchForBooks(searchKeyword: string): Observable<APIResponse>{
-        return this.http.get<APIResponse>(this.baseURL + 'book/result?searchKeyword=' + searchKeyword)
+    searchForBooks(searchKeyword: string): Observable<APIResponse<Book[]>>{
+        return this.http.get<APIResponse<Book[]>>(this.baseURL + 'book/result?searchKeyword=' + searchKeyword)
     }
 
-    createBook(newBook: createBook): Observable<APIResponse>{
-        return this.http.post<APIResponse>(this.baseURL + '/book', newBook)
+    createBook(newBook: Book): Observable<APIResponse<Book>>{
+        return this.http.post<APIResponse<Book>>(this.baseURL + 'book', newBook)
     }
 }
