@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { APIResponse } from '../models/apiresponse';
 import { APIResponseService } from '../service/apiresponse.service';
 import { HttpStatusCode } from '@angular/common/http';
+import { Book } from '../models/book';
 
 @Component({
   selector: 'app-book-search',
@@ -18,7 +19,7 @@ export class BookSearchComponent {
   hasSearched: boolean = false;
   isLoading: boolean = false;
 
-  apiResponse: APIResponse = {
+  apiResponse: APIResponse<Book[]> = {
     isSuccess: false,
     result: [],
     httpStatusCode: HttpStatusCode.BadRequest,
@@ -30,7 +31,7 @@ export class BookSearchComponent {
   onSearch(): void {
     this.isLoading = true;
     this.apiResponseService.searchForBooks(this.searchQuery).subscribe({
-      next: (response: APIResponse) => {
+      next: (response: APIResponse<Book[]>) => {
         this.apiResponse = response;
         console.log('API Response: ', this.apiResponse);
         this.hasSearched = true;

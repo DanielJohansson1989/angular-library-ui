@@ -3,6 +3,7 @@ import { APIResponse } from '../models/apiresponse';
 import { APIResponseService } from '../service/apiresponse.service';
 import { CommonModule } from '@angular/common';
 import { HttpStatusCode } from '@angular/common/http';
+import { Book } from '../models/book';
 
 @Component({
   selector: 'app-booklist-display',
@@ -13,7 +14,7 @@ import { HttpStatusCode } from '@angular/common/http';
 })
 export class BooklistDisplayComponent {
 
-  apiResponse: APIResponse = {
+  apiResponse: APIResponse<Book[]> = {
     isSuccess: false,
     result: [],
     httpStatusCode: HttpStatusCode.BadRequest,
@@ -30,7 +31,7 @@ export class BooklistDisplayComponent {
 
   getApiResponse(){
     this.apiResponseService.getAllBooks().subscribe({
-      next: (response: APIResponse) => {
+      next: (response: APIResponse<Book[]>) => {
         this.apiResponse = response;
         this.sortByTitle();
         console.log('API Response: ', this.apiResponse);
