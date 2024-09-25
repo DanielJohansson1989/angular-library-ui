@@ -1,9 +1,8 @@
 import { HttpStatusCode } from "@angular/common/http";
-import { Book } from "./book";
 
-export interface APIResponse{
+export interface APIResponse<T>{
     isSuccess: boolean;
-    result: Book[];
+    result: T;
     httpStatusCode: HttpStatusCode;
     errorList: string[];
 }
