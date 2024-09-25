@@ -1,1 +1,31 @@
-<p>createbook works!</p>
+<div class="container">
+    <form #form="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" name="title" [(ngModel)]="book.title"/>
+        </div>
+        <div class="form-group">
+            <label>Author</label>
+            <input type="text" name="author" [(ngModel)]="book.author"/>
+        </div>
+        <div class="form-group">
+            <label>Date of publication</label>
+            <input type="date" name="dateOfPublication" [(ngModel)]="book.dateOfPublication"/>
+        </div>
+        <div class="form-group">
+            <label>Genre</label>
+            <input type="text" name="genre" [(ngModel)]="book.genre">
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" name="description" [(ngModel)]="book.description"/>
+        </div>
+        <div class="form-group">
+            <label>URL for picture</label>
+            <input type="url" name="imageURL" [(ngModel)]="book.imageURL"/>
+        </div>
+        <div class="form-group">
+            <button type="submit">Save</button>
+        </div>
+    </form>
+</div>
