@@ -13,7 +13,7 @@ import { Book } from '../models/book';
 })
 export class CreatebookComponent {
   book: Book = {
-    iD: 0,
+    id: 0,
     title: '',
     author: '',
     dateOfPublication: '',
@@ -41,7 +41,7 @@ export class CreatebookComponent {
 
   resetForm() {
     this.book = {
-      iD: 0,
+      id: 0,
       title: '',
       author: '',
       dateOfPublication: '',
