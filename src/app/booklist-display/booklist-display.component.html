@@ -12,6 +12,7 @@
             {{ book.title }} by {{ book.author }}
             <span *ngIf="book.available" class="btn btn-success">Is available</span>
             <span *ngIf="book.available === false" class="btn btn-danger">Is not available</span>
+            <button type="button" (click)="goToDetails(book.id)">Details</button>
         </p>
         
     </div>

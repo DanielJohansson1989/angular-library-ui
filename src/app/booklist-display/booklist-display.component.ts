@@ -4,6 +4,7 @@ import { APIResponseService } from '../service/apiresponse.service';
 import { CommonModule } from '@angular/common';
 import { HttpStatusCode } from '@angular/common/http';
 import { Book } from '../models/book';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-booklist-display',
@@ -21,7 +22,7 @@ export class BooklistDisplayComponent {
     errorList: []
   }
 
-  constructor( private apiResponseService: APIResponseService ) {
+  constructor( private apiResponseService: APIResponseService, private router: Router ) {
 
   }
 
@@ -81,5 +82,9 @@ export class BooklistDisplayComponent {
     this.apiResponse.result.sort((a, b) => {
       return a.author.localeCompare(b.author);
     });
+  }
+
+  goToDetails(id: number){
+    this.router.navigate(['book-displaydetails-component/', id]);
   }
 }
