@@ -20,10 +20,14 @@ export class APIResponseService{
     }
 
     searchForBooks(searchKeyword: string): Observable<APIResponse<Book[]>>{
-        return this.http.get<APIResponse<Book[]>>(this.baseURL + 'book/result?searchKeyword=' + searchKeyword)
+        return this.http.get<APIResponse<Book[]>>(this.baseURL + 'book/result?searchKeyword=' + searchKeyword);
     }
 
     createBook(newBook: Book): Observable<APIResponse<Book>>{
-        return this.http.post<APIResponse<Book>>(this.baseURL + 'book', newBook)
+        return this.http.post<APIResponse<Book>>(this.baseURL + 'book', newBook);
+    }
+
+    getSingleBook(bookId: number): Observable<APIResponse<Book>>{
+        return this.http.get<APIResponse<Book>>(this.baseURL + 'book/' + bookId);
     }
 }
