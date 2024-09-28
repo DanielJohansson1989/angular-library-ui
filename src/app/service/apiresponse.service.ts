@@ -30,4 +30,8 @@ export class APIResponseService{
     getSingleBook(bookId: number): Observable<APIResponse<Book>>{
         return this.http.get<APIResponse<Book>>(this.baseURL + 'book/' + bookId);
     }
+    
+    updateBook(book: Book): Observable<APIResponse<Book>> {
+        return this.http.put<APIResponse<Book>>(this.baseURL + 'book', book);
+    }
 }
