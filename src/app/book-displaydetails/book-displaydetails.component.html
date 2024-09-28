@@ -1,13 +1,61 @@
 <div class="container-flex">
-    <div class="col-md-4" *ngIf="apiResponse.isSuccess">
-        <img src="{{ apiResponse.result.imageURL }}" alt="No pic">
+    <div class="col-md-4">
+        <img src="{{ book.imageURL }}" alt="No pic">
     </div>
     <div class="col-md-4">
-        <h2>{{ apiResponse.result.title }}</h2>
-        <button type="button" class="btn btn-outline-primary">Update</button>
+        <h2>{{ book.title }}</h2>
+        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateBookModal">Update</button>
         <button type="button">Delete</button>
     </div>
     <div>
-        <p>{{ apiResponse.result.description }}</p>
+        <p>{{ book.description }}</p>
+    </div>
+</div>
+<!-- Update Book Modal-->
+<div class="modal fade" id="updateBookModal" tabindex="-1" aria-labelledby="updateBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateBookModalLabel">Update</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="onSubmit()">
+                    <input type="hidden" name="id" [(ngModel)]="book.id">
+                    <div class="formGroup">
+                        <label for="title">Title</label>
+                        <input type="text" name="title" [(ngModel)]="book.title">
+                    </div>
+                    <div class="formGroup">
+                        <label for="author">Author</label>
+                        <input type="text" name="author" [(ngModel)]="book.author">
+                    </div>
+                    <div class="formGroup">
+                        <label for="dateOfPublication">Date of publication</label>
+                        <input type="date" name="dateOfPublication" [(ngModel)]="book.dateOfPublication">
+                    </div>
+                    <div class="formGroup">
+                        <label for="genre">Genre</label>
+                        <input type="text" name="genre" [(ngModel)]="book.genre">
+                    </div>
+                    <div class="formGroup">
+                        <label for="available">Is available</label>
+                        <input type="checkbox" name="available" [(ngModel)]="book.available">
+                    </div>
+                    <div class="formGroup">
+                        <label for="imageURL">Url for image</label>
+                        <input type="url" name="imageURL" [(ngModel)]="book.imageURL">
+                    </div>
+                    <div class="formGroup">
+                        <label for="description">Description</label>
+                        <input type="text" name="description" [(ngModel)]="book.description">
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-outline-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
