@@ -5,8 +5,9 @@ import { CreatebookComponent } from './createbook/createbook.component';
 import { BookDisplaydetailsComponent } from './book-displaydetails/book-displaydetails.component';
 
 export const routes: Routes = [
-    { path: 'book-search-component', component: BookSearchComponent },
-    { path: 'booklist-display-component', component: BooklistDisplayComponent },
-    { path: 'createbook-component', component: CreatebookComponent },
-    { path: 'book-displaydetails-component/:id', component: BookDisplaydetailsComponent}
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: 'home', component: BookSearchComponent },
+    { path: 'books', component: BooklistDisplayComponent },
+    { path: 'createbook', component: CreatebookComponent },
+    { path: 'books/details/:id', component: BookDisplaydetailsComponent}
 ];

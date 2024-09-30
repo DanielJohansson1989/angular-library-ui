@@ -85,6 +85,6 @@ export class BooklistDisplayComponent {
   }
 
   goToDetails(id: number){
-    this.router.navigate(['book-displaydetails-component/', id]);
+    this.router.navigate(['books/details/', id]);
   }
 }
