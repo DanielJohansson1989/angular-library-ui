@@ -5,7 +5,7 @@
     <div class="col-md-4">
         <h2>{{ book.title }}</h2>
         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateBookModal">Update</button>
-        <button type="button">Delete</button>
+        <button type="button" (click)="onDelete(book.id)">Delete</button>
     </div>
     <div>
         <p>{{ book.description }}</p>

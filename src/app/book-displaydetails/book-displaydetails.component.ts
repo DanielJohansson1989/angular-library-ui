@@ -54,4 +54,15 @@ export class BookDisplaydetailsComponent {
       }
     });
   }
+
+  onDelete(bookId: number) {
+    this.apiResponseService.deleteBook(bookId).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
 }
