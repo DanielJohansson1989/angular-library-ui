@@ -34,4 +34,8 @@ export class APIResponseService{
     updateBook(book: Book): Observable<APIResponse<Book>> {
         return this.http.put<APIResponse<Book>>(this.baseURL + 'book', book);
     }
+
+    deleteBook(bookId: number): Observable<APIResponse<Book>>{
+        return this.http.delete<APIResponse<Book>>(this.baseURL + 'book/' + bookId);
+    }
 }
