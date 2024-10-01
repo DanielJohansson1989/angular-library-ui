@@ -1,14 +1,19 @@
-<div class="container-flex">
-    <div class="col-md-4">
-        <img src="{{ book.imageURL }}" alt="No pic">
-    </div>
-    <div class="col-md-4">
-        <h2>{{ book.title }}</h2>
-        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateBookModal">Update</button>
-        <button type="button" (click)="onDelete(book.id)">Delete</button>
-    </div>
-    <div>
-        <p>{{ book.description }}</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-2">
+            <img src="{{ apiResponse.result.imageURL }}" alt="No pic">
+        </div>
+        <div class="col-md-3">
+            <h2>{{ apiResponse.result.title }}</h2>
+            <h3>{{ apiResponse.result.author }}</h3>
+            <p>Date of publication: {{ apiResponse.result.dateOfPublication }}</p>
+            <p>Genre: {{ apiResponse.result.genre }}</p>
+            <button type="button" class="btn btn-outline-primary m-1" data-bs-toggle="modal" data-bs-target="#updateBookModal">Update</button>
+            <button type="button" class="btn btn-outline-danger m-1" (click)="onDelete(apiResponse.result.id)">Delete</button>
+        </div>
+        <div class="col-md-7">
+            <p class="mt-md-5">{{ apiResponse.result.description }}</p>
+        </div>
     </div>
 </div>
 <!-- Update Book Modal-->
@@ -21,38 +26,72 @@
             </div>
             <div class="modal-body">
                 <form (ngSubmit)="onSubmit()">
-                    <input type="hidden" name="id" [(ngModel)]="book.id">
+                    <input type="hidden" name="id" [(ngModel)]="apiResponse.result.id">
                     <div class="formGroup">
-                        <label for="title">Title</label>
-                        <input type="text" name="title" [(ngModel)]="book.title">
+                        <label class="fw-bold m-2" for="title">Title</label>
+                        <input type="text" id="title" name="title" class="form-control" required maxlength="50" [(ngModel)]="apiResponse.result.title" #title="ngModel">
+                        <div *ngIf="title.invalid && title.touched">
+                            <div class="text-danger" *ngIf="title.hasError('required')">
+                                Title is required
+                            </div>
+                            <div class="text-danger" *ngIf="title.hasError('maxlength')">
+                                Title can not be longer than 50 characters
+                            </div>
+                        </div>
                     </div>
                     <div class="formGroup">
-                        <label for="author">Author</label>
-                        <input type="text" name="author" [(ngModel)]="book.author">
+                        <label class="fw-bold m-2" for="author">Author</label>
+                        <input type="text" name="author" class="form-control" required maxlength="50" [(ngModel)]="apiResponse.result.author" #author="ngModel">
+                        <div *ngIf="author.invalid && author.touched">
+                            <div class="text-danger" *ngIf="author.hasError('required')">
+                                Name of the author is required
+                            </div>
+                            <div class="text-danger" *ngIf="author.hasError('maxlength')">
+                                The full name can not be longer than 50 characters
+                            </div>
+                        </div>
                     </div>
                     <div class="formGroup">
-                        <label for="dateOfPublication">Date of publication</label>
-                        <input type="date" name="dateOfPublication" [(ngModel)]="book.dateOfPublication">
+                        <label class="fw-bold m-2" for="dateOfPublication">Date of publication</label>
+                        <input type="date" name="dateOfPublication" class="form-control" required [(ngModel)]="apiResponse.result.dateOfPublication" #dateOfPublication="ngModel">
+                        <div *ngIf="dateOfPublication.invalid && dateOfPublication.touched">
+                            <div class="text-danger">
+                                Date is required
+                            </div>
+                        </div>
                     </div>
                     <div class="formGroup">
-                        <label for="genre">Genre</label>
-                        <input type="text" name="genre" [(ngModel)]="book.genre">
+                        <label class="fw-bold m-2" for="genre">Genre</label>
+                        <input type="text" name="genre" class="form-control" required maxlength="30" [(ngModel)]="apiResponse.result.genre" #genre="ngModel">
+                        <div *ngIf="genre.invalid && genre.touched">
+                            <div class="text-danger" *ngIf="genre.hasError('required')">
+                                Genre is required
+                            </div>
+                            <div class="text-danger" *ngIf="genre.hasError('maxlength')">
+                                Genre can not be longer than 30 characters
+                            </div>
+                        </div>
                     </div>
                     <div class="formGroup">
-                        <label for="available">Is available</label>
-                        <input type="checkbox" name="available" [(ngModel)]="book.available">
+                        <label class="fw-bold m-2" for="available">Is available</label>
+                        <input type="checkbox" name="available" [(ngModel)]="apiResponse.result.available">
                     </div>
                     <div class="formGroup">
-                        <label for="imageURL">Url for image</label>
-                        <input type="url" name="imageURL" [(ngModel)]="book.imageURL">
+                        <label class="fw-bold m-2" for="imageURL">Url for image</label>
+                        <input type="url" name="imageURL" class="form-control" [(ngModel)]="apiResponse.result.imageURL">
                     </div>
                     <div class="formGroup">
-                        <label for="description">Description</label>
-                        <input type="text" name="description" [(ngModel)]="book.description">
+                        <label class="fw-bold m-2" for="description">Description</label>
+                        <textarea type="text" name="description" class="form-control" [(ngModel)]="apiResponse.result.description"></textarea>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-outline-primary">Save Changes</button>
+                        <div class="m-2" *ngIf="!updateSuccess">
+                            <button type="submit" class="btn btn-outline-primary">Save Changes</button>
+                        </div>
+                        <div class="m-2" *ngIf="updateSuccess">
+                            <p class="text-success fw-bold">Update is successfull</p>
+                            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal" (click)="onCloseModal()">OK</button>
+                        </div>
                     </div>
                 </form>
             </div>

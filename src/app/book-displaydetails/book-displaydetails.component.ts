@@ -4,6 +4,8 @@ import { Book } from '../models/book';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
+import { APIResponse } from '../models/apiresponse';
 
 @Component({
   selector: 'app-book-displaydetails',
@@ -17,15 +19,23 @@ export class BookDisplaydetailsComponent {
   constructor(private apiResponseService: APIResponseService, private route: ActivatedRoute, private router: Router){
 
   }
-  book: Book = {
-    id: 0, 
-    title: '', 
-    author: '', 
-    dateOfPublication: '', 
-    genre: '', 
-    available: false, 
-    imageURL: '',
-    description: ''
+
+  updateSuccess: boolean = false;
+
+  apiResponse: APIResponse<Book> = {
+    isSuccess: false,
+    result: {
+      id: 0, 
+      title: '', 
+      author: '', 
+      dateOfPublication: '', 
+      genre: '', 
+      available: false, 
+      imageURL: '',
+      description: ''
+    },
+    httpStatusCode: HttpStatusCode.BadRequest,
+    errorList: [] 
   }
 
   ngOnInit(){
@@ -35,33 +45,42 @@ export class BookDisplaydetailsComponent {
   getBook(id: number){
     this.apiResponseService.getSingleBook(id).subscribe({
       next: (response) => {
-        this.book = response.result;
+        this.apiResponse = response;
       },
-      error: (error) => {
-        console.error('Error fetching data: ', error);
+      error: (error: HttpErrorResponse) => {
+        console.log(`Http status code: ${error.status}, Message: ${error.message}`);
       }
     });
   }
 
   onSubmit() {
-    console.log('The value of book that is sent to database', this.book);
-    this.apiResponseService.updateBook(this.book).subscribe({
+    console.log('The value of book that is sent to database', this.apiResponse.result);
+    this.apiResponseService.updateBook(this.apiResponse.result).subscribe({
       next: (response) => {
-        console.log(response);
+        this.apiResponse = response;
+
+        if (response.isSuccess === true) {
+          this.updateSuccess = true;
+        }
       },
-      error: (error) => {
-        console.log(error);
+      error: (error: HttpErrorResponse) => {
+        console.log(`Http status code: ${error.status}, Message: ${error.message}`);
       }
     });
   }
 
+  onCloseModal() {
+    this.updateSuccess = false;
+  }
+
   onDelete(bookId: number) {
     this.apiResponseService.deleteBook(bookId).subscribe({
-      next: (response) => {
-        console.log(response);
+      error: (error: HttpErrorResponse) => {
+        console.log(`Http status code: ${error.status}, Message: ${error.message}`);
       },
-      error: (error) => {
-        console.error(error);
+      complete: () => {
+        alert('Book deleted successfully!');
+        this.router.navigate(['books']);
       }
     });
   }

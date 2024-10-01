@@ -1,5 +1,4 @@
 <div class="container mt-5">
-    <h1 class="text-center">Search Engine</h1>
     <div class="row justify-content-center mt-4">
         <div class="col-md-8">
             <div class="input-group">
@@ -18,10 +17,21 @@
             <h3>Results for "{{ searchQuery }}":</h3>
             <ul class="list-group">
                 <li *ngFor="let book of apiResponse.result" class="list-group-item">
-                    <div>{{ book.title }}</div>
-                    <div>{{ book.author}}</div>
-                    <span *ngIf="book.available" class="btn btn-success">Is available</span>
-                    <span *ngIf="book.available === false" class="btn btn-danger">Is not available</span>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-2 d-flex justify-content-center align-items-center">
+                                <img src="{{ book.imageURL }}" alt="No picture">
+                            </div>
+                            <div class="col-md-5">
+                                <h2>{{ book.title }}</h2>
+                                <h3>{{ book.author}}</h3>
+                            </div>
+                            <div class="col-md-5 d-flex align-items-center">
+                                <span *ngIf="book.available" class="btn btn-success">Is available</span>
+                                <span *ngIf="book.available === false" class="btn btn-danger">Is not available</span>
+                            </div>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -34,6 +44,8 @@
         </div>
     </div>
     <div class="row justify-content-center mt-4" *ngIf="!apiResponse.isSuccess && hasSearched">
-        <p class="text-danger">Could not access data. Error 400</p>
+        <div class="col-md-8">
+            <p class="text-danger">Could not access data. Error 400</p>
+        </div>
     </div>
 </div>  

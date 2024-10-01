@@ -1,24 +1,36 @@
 <div class="container">
-    <div>
-        <label for="sortOptions">Sort by:</label>
-        <select id="sortOptions" (change)="onSortChange($event)">
-            <option value="title">Title</option>
-            <option value="available">Available</option>
-            <option value="author">Author</option>
-        </select>
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <label class="fw-bold m-2" for="sortOptions">Sort by:</label>
+            <select id="sortOptions" (change)="onSortChange($event)">
+                <option value="title">Title</option>
+                <option value="available">Available</option>
+                <option value="author">Author</option>
+            </select>
+        </div>
     </div>
-    <div *ngIf="apiResponse.isSuccess">
-        <p *ngFor="let book of apiResponse.result">
-            {{ book.title }} by {{ book.author }}
-            <span *ngIf="book.available" class="btn btn-success">Is available</span>
-            <span *ngIf="book.available === false" class="btn btn-danger">Is not available</span>
-            <button type="button" (click)="goToDetails(book.id)">Details</button>
-        </p>
-        
-    </div>
-    <div *ngIf="!apiResponse.isSuccess && apiResponse.errorList">
-        <span>
-            Error: {{ apiResponse.errorList }}
-        </span>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let book of apiResponse.result">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-2 d-flex justify-content-center align-items-center">
+                                <img src="{{ book.imageURL }}" alt="No picture">
+                            </div>
+                            <div class="col-md-5">
+                                <h2>{{ book.title }}</h2>
+                                <h3>{{ book.author}}</h3>
+                                <button type="button" (click)="goToDetails(book.id)">Details</button>
+                            </div>
+                            <div class="col-md-5 d-flex align-items-center">
+                                <span *ngIf="book.available" class="btn btn-success">Is available</span>
+                                <span *ngIf="book.available === false" class="btn btn-danger">Is not available</span>
+                            </div>
+                        </div>
+                    </div>
+                </li> 
+            </ul>
+        </div>
     </div>
 </div>  

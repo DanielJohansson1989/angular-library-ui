@@ -1,31 +1,64 @@
 <div class="container">
-    <form #form="ngForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label>Title</label>
-            <input type="text" name="title" [(ngModel)]="book.title"/>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form #form="ngForm" (ngSubmit)="onSubmit()">
+                <div class="formGroup">
+                    <label class="fw-bold m-2" for="title">Title</label>
+                    <input type="text" id="title" name="title" class="form-control" required maxlength="50" [(ngModel)]="book.title" #title="ngModel">
+                    <div *ngIf="title.invalid && title.touched">
+                        <div class="text-danger" *ngIf="title.hasError('required')">
+                            Title is required
+                        </div>
+                        <div class="text-danger" *ngIf="title.hasError('maxlength')">
+                            Title can not be longer than 50 characters
+                        </div>
+                    </div>
+                </div>
+                <div class="formGroup">
+                    <label class="fw-bold m-2" for="author">Author</label>
+                    <input type="text" name="author" class="form-control" required maxlength="50" [(ngModel)]="book.author" #author="ngModel">
+                    <div *ngIf="author.invalid && author.touched">
+                        <div class="text-danger" *ngIf="author.hasError('required')">
+                            Name of the author is required
+                        </div>
+                        <div class="text-danger" *ngIf="author.hasError('maxlength')">
+                            The full name can not be longer than 50 characters
+                        </div>
+                    </div>
+                </div>
+                <div class="formGroup">
+                    <label class="fw-bold m-2" for="dateOfPublication">Date of publication</label>
+                    <input type="date" name="dateOfPublication" class="form-control" required [(ngModel)]="book.dateOfPublication" #dateOfPublication="ngModel">
+                    <div *ngIf="dateOfPublication.invalid && dateOfPublication.touched">
+                        <div class="text-danger">
+                            Date is required
+                        </div>
+                    </div>
+                </div>
+                <div class="formGroup">
+                    <label class="fw-bold m-2" for="genre">Genre</label>
+                    <input type="text" name="genre" class="form-control" required maxlength="30" [(ngModel)]="book.genre" #genre="ngModel">
+                    <div *ngIf="genre.invalid && genre.touched">
+                        <div class="text-danger" *ngIf="genre.hasError('required')">
+                            Genre is required
+                        </div>
+                        <div class="text-danger" *ngIf="genre.hasError('maxlength')">
+                            Genre can not be longer than 30 characters
+                        </div>
+                    </div>
+                </div>
+                <div class="formGroup">
+                    <label class="fw-bold m-2" for="imageURL">Url for image</label>
+                    <input type="url" name="imageURL" class="form-control" [(ngModel)]="book.imageURL">
+                </div>
+                <div class="formGroup">
+                    <label class="fw-bold m-2" for="description">Description</label>
+                    <textarea type="text" name="description" class="form-control" [(ngModel)]="book.description"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-outline-primary mt-3 fw-bold" type="submit">Submit</button>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label>Author</label>
-            <input type="text" name="author" [(ngModel)]="book.author"/>
-        </div>
-        <div class="form-group">
-            <label>Date of publication</label>
-            <input type="date" name="dateOfPublication" [(ngModel)]="book.dateOfPublication"/>
-        </div>
-        <div class="form-group">
-            <label>Genre</label>
-            <input type="text" name="genre" [(ngModel)]="book.genre">
-        </div>
-        <div class="form-group">
-            <label>Description</label>
-            <input type="text" name="description" [(ngModel)]="book.description"/>
-        </div>
-        <div class="form-group">
-            <label>URL for picture</label>
-            <input type="url" name="imageURL" [(ngModel)]="book.imageURL"/>
-        </div>
-        <div class="form-group">
-            <button type="submit">Save</button>
-        </div>
-    </form>
+    </div>
 </div>

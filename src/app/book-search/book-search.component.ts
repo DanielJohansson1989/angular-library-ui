@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { APIResponse } from '../models/apiresponse';
 import { APIResponseService } from '../service/apiresponse.service';
-import { HttpStatusCode } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Book } from '../models/book';
 
 @Component({
@@ -33,12 +33,11 @@ export class BookSearchComponent {
     this.apiResponseService.searchForBooks(this.searchQuery).subscribe({
       next: (response: APIResponse<Book[]>) => {
         this.apiResponse = response;
-        console.log('API Response: ', this.apiResponse);
         this.hasSearched = true;
         this.isLoading = false;
       },
-      error: (error) => {
-        console.error('Error fetching data: ', error);
+      error: (error: HttpErrorResponse) => {
+        console.log(`Http status code: ${error.status}, Message: ${error.message}`);
         this.hasSearched = true;
         this.isLoading = false;
       }

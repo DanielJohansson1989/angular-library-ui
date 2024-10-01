@@ -3,11 +3,12 @@ import { APIResponseService } from '../service/apiresponse.service';
 import { APIResponse } from '../models/apiresponse';
 import { FormsModule } from '@angular/forms';
 import { Book } from '../models/book';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-createbook',
   standalone: true,
-  imports: [ FormsModule ],
+  imports: [ FormsModule, CommonModule],
   templateUrl: './createbook.component.html',
   styleUrl: './createbook.component.css'
 })
@@ -28,7 +29,6 @@ export class CreatebookComponent {
   onSubmit(){
     this.apiResponseService.createBook(this.book).subscribe({
       next: (response: APIResponse<Book>) => {
-        console.log(response.result);
         if (response.isSuccess){
           this.resetForm();
         }

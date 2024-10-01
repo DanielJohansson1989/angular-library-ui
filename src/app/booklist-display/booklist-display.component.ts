@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { APIResponse } from '../models/apiresponse';
 import { APIResponseService } from '../service/apiresponse.service';
 import { CommonModule } from '@angular/common';
-import { HttpStatusCode } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { Book } from '../models/book';
 import { Router } from '@angular/router';
 
@@ -35,10 +35,9 @@ export class BooklistDisplayComponent {
       next: (response: APIResponse<Book[]>) => {
         this.apiResponse = response;
         this.sortByTitle();
-        console.log('API Response: ', this.apiResponse);
       },
-      error: (error) => {
-        console.error('Error fetching data: ', error);
+      error: (error: HttpErrorResponse) => {
+        console.log(`Http status code: ${error.status}, Message: ${error.message}`);   
       }
     });
   }
