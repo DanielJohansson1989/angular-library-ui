@@ -21,7 +21,7 @@
                             <div class="col-md-5">
                                 <h2>{{ book.title }}</h2>
                                 <h3>{{ book.author}}</h3>
-                                <button type="button" (click)="goToDetails(book.id)">Details</button>
+                                <button class="btn btn-outline-primary" type="button" (click)="goToDetails(book.id)">Details</button>
                             </div>
                             <div class="col-md-5 d-flex align-items-center">
                                 <span *ngIf="book.available" class="btn btn-success">Is available</span>
