@@ -31,6 +31,7 @@ export class CreatebookComponent {
       next: (response: APIResponse<Book>) => {
         if (response.isSuccess){
           this.resetForm();
+          alert('The data is successfully sent to the database!');
         }
       },
       error: (error) => {
