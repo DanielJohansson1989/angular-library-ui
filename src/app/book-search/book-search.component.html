@@ -14,7 +14,6 @@
     </div>  
     <div class="row justify-content-center mt-4" *ngIf="apiResponse.isSuccess && apiResponse.result.length > 0">
         <div class="col-md-8">
-            <h3>Results for "{{ searchQuery }}":</h3>
             <ul class="list-group">
                 <li *ngFor="let book of apiResponse.result" class="list-group-item">
                     <div class="container">
